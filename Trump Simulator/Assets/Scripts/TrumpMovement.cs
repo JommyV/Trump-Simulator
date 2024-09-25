@@ -7,17 +7,29 @@ public class TrumpMovement : MonoBehaviour
 {
     AudioSource audioSource;
     AudioClip theDogs;
+    [SerializeField] AudioClip deathScream;
     private float horizontalMovement;
     private float verticalMovement;
     private Rigidbody2D rb;
     Vector2 movement;
-    float speed = 10;
+    //float speed = 10;
     [SerializeField] float moveDistance = 1f;
     [SerializeField] Sprite rightTrump;
     [SerializeField] Sprite leftTrump;
     [SerializeField] Sprite normalTrump;
-    SpriteRenderer donaldSprite;
-
+    [SerializeField] Sprite rightTrumpOneEar;
+    [SerializeField] Sprite leftTrumpOneEar;
+    [SerializeField] Sprite normalTrumpOneEar;
+    [SerializeField] Sprite rightTrumpNoEar;
+    [SerializeField] Sprite leftTrumpNoEar;
+    [SerializeField] Sprite normalTrumpNoEar;
+    [SerializeField] Sprite deadTrump;
+    public SpriteRenderer donaldSprite;
+    private Sprite rightSprite;
+    private Sprite leftSprite;
+    public Sprite normalSprite;
+    float health = 3f;
+    bool dead = false;
 
 
 
@@ -25,9 +37,13 @@ public class TrumpMovement : MonoBehaviour
     void Start()
     {
        audioSource = GetComponent<AudioSource>();
-       audioSource.Play();
+      //audioSource.Play();
        rb = GetComponent<Rigidbody2D>();
        donaldSprite = GetComponent<SpriteRenderer>();
+       leftSprite = leftTrump;
+       rightSprite = rightTrump;
+       normalSprite = normalTrump;
+       
        
 
     }
@@ -35,26 +51,62 @@ public class TrumpMovement : MonoBehaviour
     // Update is called once per frame
     async void Update()
     {
-       
-        
-        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) // Move left
+
+
+        if (health != 0 && Input.GetKeyDown(KeyCode.A) || health != 0 && Input.GetKeyDown(KeyCode.LeftArrow))// Move left
         {
-            donaldSprite.sprite = leftTrump;
+            donaldSprite.sprite = leftSprite;
             transform.position += Vector3.left * moveDistance;
             await Task.Delay(100);
-            donaldSprite.sprite = normalTrump;
+            donaldSprite.sprite = normalSprite;
         }
-        if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) // Move right
+        else if (health != 0 && Input.GetKeyDown(KeyCode.D) || health != 0 && Input.GetKeyDown(KeyCode.RightArrow)) // Move right
         {
-            donaldSprite.sprite = rightTrump;
+            donaldSprite.sprite = rightSprite;
             transform.position += Vector3.right * moveDistance;
             await Task.Delay(100);
-            donaldSprite.sprite = normalTrump;
+            donaldSprite.sprite = normalSprite;
         }
-        
+        //else { donaldSprite.sprite = normalSprite; }
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            TrumpDamage();
+            donaldSprite.sprite = normalSprite;
+        }
+
     }
-    private void FixedUpdate()
+    public void TrumpDamage()
     {
-       
+        health = Mathf.Clamp(health - 1, 0,3);
+        if (health == 2)
+        {
+            leftSprite = leftTrumpOneEar;
+            rightSprite = rightTrumpOneEar;
+            normalSprite = normalTrumpOneEar;
+            donaldSprite.sprite = normalSprite;
+            Debug.Log("I got shot");
+        }
+        else if (health == 1) 
+        {
+            leftSprite = leftTrumpNoEar;
+            rightSprite = rightTrumpNoEar;
+            normalSprite = normalTrumpNoEar;
+           donaldSprite.sprite = normalSprite;
+            Debug.Log("I got shot again");
+        }
+        else if (health == 0 && !dead) 
+        {
+            normalSprite = deadTrump;
+            audioSource.PlayOneShot(deathScream);
+            dead = true;
+        }
+        Debug.Log(health);
+
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+       /* CrossHairControl t = collision.GetComponent<Collider2D>().GetComponent<TrumpMovement>();
+        if (t != null)
+            TrumpDamage();*/
     }
 }
