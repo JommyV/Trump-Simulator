@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TrumpMovement : MonoBehaviour
 {
     AudioSource audioSource;
     AudioClip theDogs;
     [SerializeField] AudioClip deathScream;
+    [SerializeField] AudioClip shotScream;
     private float horizontalMovement;
     private float verticalMovement;
     private Rigidbody2D rb;
@@ -31,6 +33,8 @@ public class TrumpMovement : MonoBehaviour
     float health = 3f;
     bool dead = false;
     public bool killable = true;
+    private Canvas canvas;
+    [SerializeField] Scene scene;
 
 
     // Start is called before the first frame update
@@ -67,13 +71,17 @@ public class TrumpMovement : MonoBehaviour
             await Task.Delay(100);
             donaldSprite.sprite = normalSprite;
         }
-        //else { donaldSprite.sprite = normalSprite; }
+        if (Input.GetKeyDown(KeyCode.R) && dead == true)
+        {
+            SceneManager.LoadScene("PlayableScene");
+        }
     }
     public void TrumpDamage(float damage)
     {
         //if (killable)
         //{
             health = Mathf.Clamp(health - damage, 0, 3);
+        audioSource.PlayOneShot(shotScream);
             if (health == 2)
             {
                 leftSprite = leftTrumpOneEar;
@@ -94,6 +102,7 @@ public class TrumpMovement : MonoBehaviour
             {
                 normalSprite = deadTrump;
                 audioSource.PlayOneShot(deathScream);
+                gameObject.GetComponent<Collider2D>().enabled = false;
                 dead = true;
             }
             Debug.Log(health);

@@ -17,6 +17,7 @@ public class CrossHairControl : MonoBehaviour
     void Start()
     {
         StartCoroutine(ScaleOverTime(targetScale, duration));
+        shotSource.PlayOneShot(shotSound);
     }
 
     IEnumerator ScaleOverTime(Vector3 targetScale, float duration)
