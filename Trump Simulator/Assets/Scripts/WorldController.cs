@@ -19,7 +19,7 @@ public class WorldController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Time.timeScale = 0.0000001f;
+      
     }
 
     // Update is called once per frame
@@ -54,20 +54,4 @@ public class WorldController : MonoBehaviour
         await Task.Delay(200);
         Destroy(crosshairObject);
     }
-
-
-    public void BeginGame()
-    {
-        Time.timeScale = 1;
-        canvas.SetActive(false);
-
-    }
-
-    public void EndGame()
-    {
-        Application.Quit();
-        
-    }
-
-    
 }
