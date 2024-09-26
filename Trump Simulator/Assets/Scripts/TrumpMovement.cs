@@ -30,7 +30,7 @@ public class TrumpMovement : MonoBehaviour
     public Sprite normalSprite;
     float health = 3f;
     bool dead = false;
-
+    public bool killable = true;
 
 
     // Start is called before the first frame update
@@ -70,43 +70,55 @@ public class TrumpMovement : MonoBehaviour
         //else { donaldSprite.sprite = normalSprite; }
         if (Input.GetKeyDown(KeyCode.F))
         {
-            TrumpDamage();
+            TrumpDamage(1);
             donaldSprite.sprite = normalSprite;
         }
 
     }
-    public void TrumpDamage()
+    public void TrumpDamage(float damage)
     {
-        health = Mathf.Clamp(health - 1, 0,3);
-        if (health == 2)
+        //if (killable)
+        //{
+            health = Mathf.Clamp(health - damage, 0, 3);
+            if (health == 2)
+            {
+                leftSprite = leftTrumpOneEar;
+                rightSprite = rightTrumpOneEar;
+                normalSprite = normalTrumpOneEar;
+                donaldSprite.sprite = normalSprite;
+                Debug.Log("I got shot");
+            }
+            else if (health == 1)
+            {
+                leftSprite = leftTrumpNoEar;
+                rightSprite = rightTrumpNoEar;
+                normalSprite = normalTrumpNoEar;
+                donaldSprite.sprite = normalSprite;
+                Debug.Log("I got shot again");
+            }
+            else if (health == 0 && !dead)
+            {
+                normalSprite = deadTrump;
+                audioSource.PlayOneShot(deathScream);
+                dead = true;
+            }
+            Debug.Log(health);
+        //}
+    }
+  /* private void OnCollisionEnter2D(Collision2D collision)
+    {
+       FbiController fbi = collision.collider.GetComponent<Collider2D>().GetComponent<FbiController>();
+        if (fbi != null)
         {
-            leftSprite = leftTrumpOneEar;
-            rightSprite = rightTrumpOneEar;
-            normalSprite = normalTrumpOneEar;
-            donaldSprite.sprite = normalSprite;
-            Debug.Log("I got shot");
+            killable = false;
         }
-        else if (health == 1) 
-        {
-            leftSprite = leftTrumpNoEar;
-            rightSprite = rightTrumpNoEar;
-            normalSprite = normalTrumpNoEar;
-           donaldSprite.sprite = normalSprite;
-            Debug.Log("I got shot again");
-        }
-        else if (health == 0 && !dead) 
-        {
-            normalSprite = deadTrump;
-            audioSource.PlayOneShot(deathScream);
-            dead = true;
-        }
-        Debug.Log(health);
+    }
 
-    }
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionExit2D(Collision2D collision)
     {
-       /* CrossHairControl t = collision.GetComponent<Collider2D>().GetComponent<TrumpMovement>();
-        if (t != null)
-            TrumpDamage();*/
-    }
+
+        FbiController fbi = collision.collider.GetComponent<Collider2D>().GetComponent<FbiController>();
+        if (fbi == null)
+        {  killable = true; }
+    }*/
 }

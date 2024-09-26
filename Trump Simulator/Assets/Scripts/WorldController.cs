@@ -10,8 +10,8 @@ public class WorldController : MonoBehaviour
     [SerializeField] GameObject crossHairPrefab;
     [SerializeField] GameObject[] shotPositions;
     private int i;
-    [SerializeField] AudioSource shotSource;
-    [SerializeField] AudioClip shotSound;
+    //[SerializeField] AudioSource shotSource;
+    //[SerializeField] AudioClip shotSound;
     [SerializeField] GameObject canvas;
 
     private float shotTimer = 0.5f;
@@ -42,14 +42,14 @@ public class WorldController : MonoBehaviour
     {
         GameObject crosshairObject = Instantiate(crossHairPrefab, shot.transform.position, Quaternion.identity);
 
-        crosshairObject.GetComponent<SpriteRenderer>().enabled = false;
-        await Task.Delay(400);
-        crosshairObject.GetComponent<SpriteRenderer>().enabled = true;
-        await Task.Delay(400);
-        crosshairObject.GetComponent<SpriteRenderer>().enabled = false;
-        await Task.Delay(400);
-        crosshairObject.GetComponent<SpriteRenderer>().enabled = true;
-        shotSource.PlayOneShot(shotSound);
+        /* crosshairObject.GetComponent<SpriteRenderer>().enabled = false;
+         await Task.Delay(400);
+         crosshairObject.GetComponent<SpriteRenderer>().enabled = true;
+         await Task.Delay(400);
+         crosshairObject.GetComponent<SpriteRenderer>().enabled = false;
+         await Task.Delay(400);
+         crosshairObject.GetComponent<SpriteRenderer>().enabled = true;*/
+        await Task.Delay(800);
         crosshairObject.GetComponent<BoxCollider2D>().enabled = true;
         await Task.Delay(200);
         Destroy(crosshairObject);
