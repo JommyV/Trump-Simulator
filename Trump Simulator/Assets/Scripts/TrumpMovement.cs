@@ -68,12 +68,6 @@ public class TrumpMovement : MonoBehaviour
             donaldSprite.sprite = normalSprite;
         }
         //else { donaldSprite.sprite = normalSprite; }
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            TrumpDamage(1);
-            donaldSprite.sprite = normalSprite;
-        }
-
     }
     public void TrumpDamage(float damage)
     {

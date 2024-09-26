@@ -14,7 +14,7 @@ public class WorldController : MonoBehaviour
     //[SerializeField] AudioClip shotSound;
     [SerializeField] GameObject canvas;
 
-    private float shotTimer = 0.5f;
+    private float shotTimer = 2f;
 
     // Start is called before the first frame update
     void Start()
@@ -30,7 +30,7 @@ public class WorldController : MonoBehaviour
         {
             i = Random.Range(0, shotPositions.Length);
             shoot(shotPositions[i]);
-            shotTimer = 0.5f;
+            shotTimer = 2f;
         }
         if (Input.GetKeyDown(KeyCode.B))
         {
