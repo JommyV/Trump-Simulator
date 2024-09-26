@@ -8,7 +8,7 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] GameObject canvas;
     private bool movable = false;
     private bool turnable = false;
-    //[SerializeField] GameObject trump;
+    
     [SerializeField] Sprite walking;
     [SerializeField] Sprite stopped;
     public SpriteRenderer donaldSprite;

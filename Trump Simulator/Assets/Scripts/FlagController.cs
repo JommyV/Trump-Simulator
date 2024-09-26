@@ -19,7 +19,7 @@ public class FlagController : MonoBehaviour
     }
 
     // Update is called once per frame
-    async void Update()
+    void Update()
     {
        
       
