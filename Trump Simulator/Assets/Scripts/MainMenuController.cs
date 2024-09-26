@@ -15,6 +15,7 @@ public class MainMenuController : MonoBehaviour
     public SpriteRenderer donaldSprite;
     [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip clip;
+    [SerializeField] AudioClip hino;
     private float talkingTime = 10000f;
     private float cutsceneTime = 100000f;
 
@@ -22,6 +23,7 @@ public class MainMenuController : MonoBehaviour
     {
         //Time.timeScale = 0.0000000001f;
         donaldSprite = GetComponent<SpriteRenderer>();
+        audioSource.PlayOneShot(hino);
         
     }
 
@@ -31,7 +33,8 @@ public class MainMenuController : MonoBehaviour
         //Time.timeScale = 1;
         canvas.SetActive(false);
         movable = true;
-      audioSource.PlayOneShot(clip);
+        audioSource.Stop();
+        audioSource.PlayOneShot(clip);
         cutsceneTime = 47f;
         talkingTime = 20f;
         
@@ -47,7 +50,7 @@ public class MainMenuController : MonoBehaviour
     {
         if (movable)
         {
-            transform.position += Vector3.left * 0.005f;
+            transform.position += Vector3.left * 0.05f;
             donaldSprite.sprite = walking;
             if (transform.position.x < 0)
             {

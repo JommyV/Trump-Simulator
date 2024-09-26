@@ -76,7 +76,7 @@ public class TrumpMovement : MonoBehaviour
             SceneManager.LoadScene("PlayableScene");
         }
     }
-    public void TrumpDamage(float damage)
+    public async void TrumpDamage(float damage)
     {
         //if (killable)
         //{
@@ -104,6 +104,8 @@ public class TrumpMovement : MonoBehaviour
                 audioSource.PlayOneShot(deathScream);
                 gameObject.GetComponent<Collider2D>().enabled = false;
                 dead = true;
+                await Task.Delay(6000);
+                SceneManager.LoadScene("DeathScene");
             }
             Debug.Log(health);
         //}
