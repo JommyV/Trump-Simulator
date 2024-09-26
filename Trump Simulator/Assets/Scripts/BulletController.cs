@@ -8,7 +8,7 @@ public class BulletController : MonoBehaviour
     [SerializeField] GameObject[] world;
     //[SerializeField] GameObject world2;
     //[SerializeField] GameObject world3;
-    private float bulletTimer = 5f;
+    private float bulletTimer = 3f;
     int i = 0;
 
     // Start is called before the first frame update
@@ -21,11 +21,12 @@ public class BulletController : MonoBehaviour
     void Update()
     {
         bulletTimer -= Time.deltaTime;
-        if (bulletTimer <= 0 )
+        if (bulletTimer <= 0 && i <3)
         {
             world[i].SetActive(true);
             i++;
-            bulletTimer = 5f;
+            bulletTimer = 3f;
+            Debug.Log("changed shots");
         }
     }
 }

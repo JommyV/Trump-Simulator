@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MainMenuController : MonoBehaviour
 {
@@ -14,7 +15,8 @@ public class MainMenuController : MonoBehaviour
     public SpriteRenderer donaldSprite;
     [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip clip;
-    private float talkingTime = 15f;
+    private float talkingTime = 10000f;
+    private float cutsceneTime = 100000f;
 
     void Start()
     {
@@ -29,7 +31,9 @@ public class MainMenuController : MonoBehaviour
         //Time.timeScale = 1;
         canvas.SetActive(false);
         movable = true;
-       audioSource.PlayOneShot(clip);
+      audioSource.PlayOneShot(clip);
+        cutsceneTime = 47f;
+        talkingTime = 20f;
         
 
     }
@@ -53,22 +57,28 @@ public class MainMenuController : MonoBehaviour
             }
         }
 
-        talkingTime -= Time.deltaTime;
-        if (talkingTime < 0)
-        {
-            if(donaldSprite.flipX == false)
+            talkingTime -= Time.deltaTime;
+            if (talkingTime < 0)
             {
-                donaldSprite.flipX = true;
-                talkingTime = 4f;
-            }else 
-            { 
-                donaldSprite.flipX = false;
-                talkingTime = 4f;
+                if (donaldSprite.flipX == false)
+                {
+                    donaldSprite.flipX = true;
+                    talkingTime = 4f;
+                }
+                else
+                {
+                    donaldSprite.flipX = false;
+                    talkingTime = 4f;
+                }
+
+        
+            }  
+            cutsceneTime -= Time.deltaTime;
+            if( cutsceneTime < 0 )
+            {
+                SceneManager.LoadScene("PlayableScene");
             }
-            
-            
-            
-        }
+        
     }
 }
 

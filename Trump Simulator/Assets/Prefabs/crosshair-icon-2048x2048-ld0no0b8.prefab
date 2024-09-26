@@ -146,7 +146,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shotSource: {fileID: -3225689243034217339}
-  shotSound: {fileID: 8300000, guid: d303cdfb800472448939cd4f7c46f78a, type: 3}
+  shotSound: {fileID: 8300000, guid: da307593dc76bde4fb892d7ca097e9b3, type: 3}
   duration: 1
   targetScale: {x: 0, y: 0, z: 0}
 --- !u!50 &5772359616779604449
