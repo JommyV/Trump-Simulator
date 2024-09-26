@@ -51,6 +51,4 @@ public class WorldController : MonoBehaviour
         crosshairObject.GetComponent<BoxCollider2D>().enabled = true;
         await Task.Delay(200);
         Destroy(crosshairObject);
-        //CrossHairControl crosshair = crosshairObject.GetComponent<CrossHairControl>();
     }
-}
