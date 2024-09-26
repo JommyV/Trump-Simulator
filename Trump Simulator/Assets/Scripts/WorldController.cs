@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class WorldController : MonoBehaviour
 {
@@ -11,13 +12,14 @@ public class WorldController : MonoBehaviour
     private int i;
     [SerializeField] AudioSource shotSource;
     [SerializeField] AudioClip shotSound;
-    
+    [SerializeField] GameObject canvas;
+
     private float shotTimer = 0.5f;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        Time.timeScale = 0.0000001f;
     }
 
     // Update is called once per frame
@@ -26,20 +28,20 @@ public class WorldController : MonoBehaviour
         shotTimer -= Time.deltaTime;
         if (shotTimer <= 0)
         {
-            i = Random.Range(0,shotPositions.Length);
-           shoot(shotPositions[i]);
-           shotTimer = 0.5f;
+            i = Random.Range(0, shotPositions.Length);
+            shoot(shotPositions[i]);
+            shotTimer = 0.5f;
         }
         if (Input.GetKeyDown(KeyCode.B))
         {
-           shoot(shotPositions[0]);
+            shoot(shotPositions[0]);
         }
-    }   
+    }
 
     async void shoot(GameObject shot)
     {
         GameObject crosshairObject = Instantiate(crossHairPrefab, shot.transform.position, Quaternion.identity);
-        
+
         crosshairObject.GetComponent<SpriteRenderer>().enabled = false;
         await Task.Delay(400);
         crosshairObject.GetComponent<SpriteRenderer>().enabled = true;
@@ -52,3 +54,20 @@ public class WorldController : MonoBehaviour
         await Task.Delay(200);
         Destroy(crosshairObject);
     }
+
+
+    public void BeginGame()
+    {
+        Time.timeScale = 1;
+        canvas.SetActive(false);
+
+    }
+
+    public void EndGame()
+    {
+        Application.Quit();
+        
+    }
+
+    
+}
